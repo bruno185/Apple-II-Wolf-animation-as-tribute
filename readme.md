@@ -4,18 +4,26 @@ Dedicated to the guy who cracked "La bête du Gévaudan"
 (A french video game on Apple II in the 80s)
 
 It is written in assembly language only (Merlin).
-Is show :
+Is shows :
 
-* In intro
+* An intro
 * The running wolf animation
 
 ## Credits
 
-* Christophe Meneboeuf : https://www.xtof.info/making-apple-ii-sing.html
+* Music algo : Christophe Meneboeuf : https://www.xtof.info/making-apple-ii-sing.html
 * Music : James Bond theme (several notes)
+* Art : unknown, I got a program from Internet as I was looking for "la bête du Gévaudan". The program (old version of Visual Studio) didn't work, but the art images in the archieve gave me the idea of this program.
+
+## Making 
+* Work with graphic tools on PC/Windows to prepare images (cut, scale, and so on).
+* The principle is to make an image (loaded at $6000) wich contains 3x3 (9) images of the wolf in différent positions. 
+* The animation is done by tranfering quickly one part of this image into the HGR screen.
+* tohgr.exe to transform PC image to HGR image
 
 ## Features
 
+* Notice the startup basic proggram bload the "loup" HGR image. This is needed for animation.
 * Works with ProDOS 8, it should work on DOS 3.3 (not tested with DOS 3.3 nor on GS)
 * The program turns on 40 col. mode.
 * Use the space bar to pause/unpause the animation

@@ -9,6 +9,8 @@ Is shows :
 * An intro
 * The running wolf animation
 
+This archive contains a disk image : use it with Applewin or your favourite Apple II emulator, and type brun tribute.
+
 ## Credits
 
 * Music algo : Christophe Meneboeuf : https://www.xtof.info/making-apple-ii-sing.html

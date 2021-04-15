@@ -212,12 +212,10 @@ playnote MAC
 
         FIN
 *
-* * * * * * * * * * * * * * * * * * * *
 * * * * * * * * * * * * * * * * * * * * 
-*               BEGIN
+* MAIN PROGRAM
 * * * * * * * * * * * * * * * * * * * *
-* INTRODUCTION
-* * * * * * * * * * * * * * * * * * * *
+*
 main    jsr home
         lda #17         ; 40 col. 
         jsr cout
@@ -231,20 +229,20 @@ main    jsr home
         lda hires       ; hgr 
         jsr chcolor     ; change color (high) bit of images
 *
-* save tune pointers
+* save tune pointers (in self modifying code)
 
         move16 play+1;saveptr
         move16 play2+1;saveptr+2
         move16 play3+1;saveptr+4
 
 *
-* paint shape 1 while playing "music"
+* Display bitmap 1 (text) while playing "music"
 *
 * setup vars for shape 1 (tribute...)
         setvar #posx;#posy;nbcol;nblig;left;right;top;bottom
 
         lda #>cut       ; (re)init shape pointer
-        sta load+2
+        sta load+2      ; in code (self modified !)
         lda #<cut
         sta load+1
 newline ldx top         ; outter loop starts here
@@ -265,7 +263,7 @@ ok      iny             ; next byte un row
 *
         lda top         ; play every 4 lines
         and #03
-        bne noplay
+        bne noplay      ; jump over music routine
         jsr play
 *
 noplay  inc top
@@ -300,15 +298,15 @@ endprog lda saveptr
         lda saveptr+5  
         sta play3+2
 * 
-* Display "hit a key ..."
+* Display "hit a key ..." bitmap
         setvar #posx2;#posy2;nbcol2;nblig2;left;right;top;bottom
         bitmap hitk;top;left;right;bottom
 *
-* Display 3 wolves
+* Display 3 wolves bitmap
         setvar #posx3;#posy3;nbcol3;nblig3;left;right;top;bottom
         bitmap loup3;top;left;right;bottom
         jsr rdkey
-* Erase "hit a key ..."
+* Erase "hit a key ..." bitmap
 * Params : color byte, top, left, right, bottom
         setvar #posx2;#posy2;nbcol2;nblig2;left;right;top;bottom
         bitmape $00;top;left;right;bottom
@@ -316,9 +314,8 @@ endprog lda saveptr
         lda #$FE 
         jsr wait
         jsr wait
-        
-
-* Erase "3 wolves"
+*
+* Erase "3 wolves" bitmap
 * Params : color byte, top, left, right, bottom
         setvar #posx3;#posy3;nbcol3;nblig3;left;right;top;bottom
         bitmape $00;top;left;right;bottom
@@ -328,10 +325,13 @@ endprog lda saveptr
         jsr wait
         move24000 $05;$A0   ; copye "tribute..." to page 2
         jsr mainlp      ; GO ANIM !
-        rts             ; end of program
+        rts             ; END OF PROGRAM
+*
 *
 * * * * * * * * * * * * * * * * * * * *
-* ANIMATION
+* SUB-ROUTINES
+* * * * * * * * * * * * * * * * * * * *
+* ANIMATION AND GRAPHICS
 * * * * * * * * * * * * * * * * * * * *
 *
 mainlp  nop
@@ -353,7 +353,7 @@ main2   jsr setvars     ; prepare vars
 * if page 1 is on (switch = 1), we draw on page 2
 * if page 2 is on (switch = 0), we draw on page 1
 *
-        lda #delaya      ; delay between frames
+        lda #delaya     ; delay between frames
         jsr wait
         inc framenb     ; next frame
         jmp mainlp      ; loop
@@ -542,7 +542,9 @@ anim    hex 000D00400D1A0040    ; 2 frames
         hex 1A2880C0            ; +1 frame : 3 frames on same row
         hex FF                  ; marker for end.
 *
-*
+* * * * * * * * * * * * * * * * * * * *
+* MUSIC SUBROTINES
+* * * * * * * * * * * * * * * * * * * *
 * setup a note from note list ans play it
 play    lda tune        ; self modified address
         beq playend
@@ -594,7 +596,8 @@ tune    hex 5203A4      ; note20
 *        hex 52020B      ; note20
         hex 00
 *
-* MUSIC
+* MUSIC DATA
+*
 * notes
 note01 hex FB
 note02 hex ED
@@ -672,7 +675,7 @@ lengthhi        hex 00
 tempo           hex 00
 *
 *
-* GRAPHICS
+* GRAPHICS DATA
 *
 left    hex 00
 right   hex 00

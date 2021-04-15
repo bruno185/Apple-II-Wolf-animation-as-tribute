@@ -218,7 +218,8 @@ playnote MAC
 * * * * * * * * * * * * * * * * * * * *
 * INTRODUCTION
 * * * * * * * * * * * * * * * * * * * *
-main    lda #17         ; 40 col. 
+main    jsr home
+        lda #17         ; 40 col. 
         jsr cout
         jsr clear1      ; clear HGR1 
         jsr clear2      ; clear HGR2

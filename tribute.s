@@ -468,7 +468,7 @@ doclr1  sta $2000,x
         lda #$00
         sta doclr1+1
         rts
-* clear1 clears $4000 (page 2)
+* clear2 clears $4000 (page 2)
 clear2 
         ldx #$00
         lda color1

@@ -9,7 +9,11 @@ Is shows :
 * An intro
 * The running wolf animation
 
-This archive contains a disk image : use it with Applewin or your favourite Apple II emulator, and type brun tribute.
+## Usage
+
+This archive contains a disk image  to be used it with Applewin or your favourite Apple II emulator.
+Boot tribute.do image disk
+type run startup
 
 ## Credits
 

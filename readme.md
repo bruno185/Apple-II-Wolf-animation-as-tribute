@@ -12,8 +12,9 @@ Is shows :
 ## Usage
 
 This archive contains a disk image to be used it with Applewin or your favourite Apple II emulator.
-Boot tribute.do image disk
-type run startup
+
+* Boot tribute.do image disk
+* type run startup
 
 ## Credits
 
